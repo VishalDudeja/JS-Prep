@@ -6,46 +6,44 @@
 
 //
 let total = 0;
-const sum = (number) =>{
-    for(let i=0 ; i< number ; i++){
-        total += i ;
-    }
+const sum = (number) => {
+	for (let i = 0; i < number; i++) {
+		total += i;
+	}
 
-    return total;
-}
-
+	return total;
+};
 
 const memoize = (fn) => {
-    let cache = {}
+	let cache = {};
 
-    return function(...args){
-        let number = args[0]
-     
-        if( number in cache){
-          console.log("from cache")
-          return cache[number]
-        }else {
-            console.log("first")
-            let result = fn(number)
-            cache[number] = result
-            return result ;
-        }
-    }
+	return function (...args) {
+		let number = args[0];
 
+		if (number in cache) {
+			console.log("from cache");
+			return cache[number];
+		} else {
+			console.log("first");
+			let result = fn(number);
+			cache[number] = result;
+			return result;
+		}
+	};
+};
 
-}
+let efficientFn = memoize(sum);
 
+console.time();
+console.log(efficientFn(6)); //default: 0.78125 ms
+console.timeEnd();
 
-let efficientFn = memoize(sum)
+console.time();
+console.log(efficientFn(6)); //default: 0.18505859375 ms
+console.timeEnd();
 
-console.time()
-console.log(efficientFn(6))  //default: 0.78125 ms
-console.timeEnd()
+console.time();
+console.log(efficientFn(6)); //default: 0.1669921875 ms
+console.timeEnd();
 
-console.time()
-console.log(efficientFn(6)) //default: 0.18505859375 ms
-console.timeEnd()
-
-console.time()
-console.log(efficientFn(6)) //default: 0.1669921875 ms
-console.timeEnd()
+/* //// Practice */
